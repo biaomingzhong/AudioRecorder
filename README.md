@@ -83,7 +83,7 @@ https://www.jianshu.com/p/c0222de2faed
     ```java
      RecordManager.getInstance().setRecordSoundSizeListener(new RecordSoundSizeListener() {
         @Override
-        public void onSoundSize(int soundSize) {
+        public void onSoundSize(double soundSize) {
         }
     });
     ```
