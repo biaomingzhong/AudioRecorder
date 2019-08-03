@@ -13,29 +13,18 @@ import java.util.Locale;
 public class Logger {
     private static final String PRE = "^_^";
     private static final String TAG = Logger.class.getSimpleName();
-    private static final int LOG_LENGTH_LIMITATION = 4000;
 
-    public static boolean IsDebug = true;
+    public static boolean IsDebug = false;
 
     private static final String space = "====================================================================================================";
-    private static boolean LOGV = true;
-    private static boolean LOGD = true;
-    private static boolean LOGI = true;
-    private static boolean LOGW = true;
-    private static boolean LOGE = true;
 
     public enum LogLevel {
         V, D, I, W, E
     }
 
-//    private static boolean LOGV = false;
-//    private static boolean LOGD = false;
-//    private static boolean LOGI = false;
-//    private static boolean LOGW = false;
-//    private static boolean LOGE = false;
 
     public static void v(String tag, String format, Object... args) {
-        if (LOGV) {
+        if (IsDebug) {
             String message = buildMessage(format, args);
             tag = formatLength(PRE + tag, 28);
 
@@ -45,7 +34,7 @@ public class Logger {
     }
 
     public static void v(Throwable throwable, String tag, String format, Object... args) {
-        if (LOGV) {
+        if (IsDebug) {
             String message = buildMessage(format, args);
             tag = formatLength(PRE + tag, 28);
 
@@ -55,7 +44,7 @@ public class Logger {
     }
 
     public static void d(String tag, String format, Object... args) {
-        if (LOGD) {
+        if (IsDebug) {
             String message = buildMessage(format, args);
             tag = formatLength(PRE + tag, 28);
 
@@ -65,7 +54,7 @@ public class Logger {
     }
 
     public static void d(Throwable throwable, String tag, String format, Object... args) {
-        if (LOGD) {
+        if (IsDebug) {
             String message = buildMessage(format, args);
             tag = formatLength(PRE + tag, 28);
 
@@ -75,7 +64,7 @@ public class Logger {
     }
 
     public static void i(String tag, String format, Object... args) {
-        if (LOGI) {
+        if (IsDebug) {
             String message = buildMessage(format, args);
             tag = formatLength(PRE + tag, 28);
 
@@ -85,7 +74,7 @@ public class Logger {
     }
 
     public static void i(Throwable throwable, String tag, String format, Object... args) {
-        if (LOGI) {
+        if (IsDebug) {
             String message = buildMessage(format, args);
             tag = formatLength(PRE + tag, 28);
 
@@ -95,7 +84,7 @@ public class Logger {
     }
 
     public static void w(String tag, String format, Object... args) {
-        if (LOGW) {
+        if (IsDebug) {
             String message = buildMessage(format, args);
             tag = formatLength(PRE + tag, 28);
 
@@ -105,7 +94,7 @@ public class Logger {
     }
 
     public static void w(Throwable throwable, String tag, String format, Object... args) {
-        if (LOGW) {
+        if (IsDebug) {
             String message = buildMessage(format, args);
             tag = formatLength(PRE + tag, 28);
 
@@ -115,7 +104,7 @@ public class Logger {
     }
 
     public static void e(String tag, String format, Object... args) {
-        if (LOGE) {
+        if (IsDebug) {
             String message = buildMessage(format, args);
             tag = formatLength(PRE + tag, 28);
 
@@ -125,7 +114,7 @@ public class Logger {
     }
 
     public static void e(Throwable throwable, String tag, String format, Object... args) {
-        if (LOGE) {
+        if (IsDebug) {
             String message = buildMessage(format, args);
             tag = formatLength(PRE + tag, 28);
 
@@ -135,7 +124,8 @@ public class Logger {
     }
 
     /**
-     * Please refer to comment of {@link #cacheLongLog(String, String, Throwable)}
+     * Due to length limitation of Logcat, over long log content won't be shown completely in log window,<br/>
+     * so cache it to local file at particular path for convenient checking.
      *
      * @param tag        TAG name.
      * @param logContent Log content.
