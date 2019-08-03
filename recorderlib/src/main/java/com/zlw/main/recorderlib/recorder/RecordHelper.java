@@ -39,6 +39,9 @@ public class RecordHelper {
     private volatile RecordState state = RecordState.IDLE;
     private static final int RECORD_AUDIO_BUFFER_TIMES = 1;
 
+    private static double REFERENCE_44100_PRESSURE = 51805.5336;
+    private static double REFERENCE_44100 = 0.00002;
+
     private RecordStateListener recordStateListener;
     private RecordDataListener recordDataListener;
     private RecordSoundSizeListener recordSoundSizeListener;
@@ -208,10 +211,14 @@ public class RecordHelper {
                     recordDataListener.onData(data);
                 }
 
+                if (currentConfig.getSampleRate() == RecordConfig.FULL_SAMPLE_RATE && recordSoundSizeListener != null) {
+                    recordSoundSizeListener.onSoundSize(getFullDb(data));
+                }
+
                 if (recordFftDataListener != null || recordSoundSizeListener != null) {
                     byte[] fftData = fftFactory.makeFftData(data);
                     if (fftData != null) {
-                        if (recordSoundSizeListener != null) {
+                        if (currentConfig.getSampleRate() != RecordConfig.FULL_SAMPLE_RATE && recordSoundSizeListener != null) {
                             recordSoundSizeListener.onSoundSize(getDb(fftData));
                         }
                         if (recordFftDataListener != null) {
@@ -221,6 +228,21 @@ public class RecordHelper {
                 }
             }
         });
+    }
+
+    private double getFullDb(byte[] data) {
+        short[] source = ByteUtils.toShorts(data);
+        double average = 0.0;
+        int bufferSize = 44100;
+        for (short s : source)
+        {
+            average += Math.abs(s);
+        }
+
+        double x = average / bufferSize;
+
+        double pressure = x / REFERENCE_44100_PRESSURE;
+        return (20 * Math.log10(pressure/REFERENCE_44100));
     }
 
     private int getDb(byte[] data) {

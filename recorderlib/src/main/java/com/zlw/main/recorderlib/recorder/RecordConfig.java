@@ -10,6 +10,9 @@ import java.util.Locale;
  * @author zhaolewei on 2018/7/11.
  */
 public class RecordConfig implements Serializable {
+
+    public static int FULL_SAMPLE_RATE = 44100;
+
     /**
      * 录音格式 默认WAV格式
      */
@@ -30,11 +33,11 @@ public class RecordConfig implements Serializable {
     private int sampleRate = 16000;
 
     /*
-        * 录音文件存放路径，默认sdcard/Record
+     * 录音文件存放路径，默认sdcard/Record
      */
     private String recordDir = String.format(Locale.getDefault(),
-            "%s/Record/",
-            Environment.getExternalStorageDirectory().getAbsolutePath());
+        "%s/Record/",
+        Environment.getExternalStorageDirectory().getAbsolutePath());
 
     public RecordConfig() {
     }
@@ -44,22 +47,22 @@ public class RecordConfig implements Serializable {
     }
 
     /**
-     * @param format         录音文件的格式
-     * @param channelConfig  声道配置
-     *                       单声道：See {@link AudioFormat#CHANNEL_IN_MONO}
-     *                       双声道：See {@link AudioFormat#CHANNEL_IN_STEREO}
+     * @param format 录音文件的格式
+     * @param channelConfig 声道配置
+     * 单声道：See {@link AudioFormat#CHANNEL_IN_MONO}
+     * 双声道：See {@link AudioFormat#CHANNEL_IN_STEREO}
      * @param encodingConfig 位宽配置
-     *                       8Bit： See {@link AudioFormat#ENCODING_PCM_8BIT}
-     *                       16Bit: See {@link AudioFormat#ENCODING_PCM_16BIT},
-     * @param sampleRate     采样率 hz: 8000/16000/44100
+     * 8Bit： See {@link AudioFormat#ENCODING_PCM_8BIT}
+     * 16Bit: See {@link AudioFormat#ENCODING_PCM_16BIT},
+     * @param sampleRate 采样率 hz: 8000/16000/44100
      */
-    public RecordConfig(RecordFormat format, int channelConfig, int encodingConfig, int sampleRate) {
+    public RecordConfig(RecordFormat format, int channelConfig, int encodingConfig,
+        int sampleRate) {
         this.format = format;
         this.channelConfig = channelConfig;
         this.encodingConfig = encodingConfig;
         this.sampleRate = sampleRate;
     }
-
 
     public String getRecordDir() {
         return recordDir;
@@ -75,7 +78,7 @@ public class RecordConfig implements Serializable {
      * @return 采样位宽 0: error
      */
     public int getEncoding() {
-        if(format == RecordFormat.MP3){//mp3后期转换
+        if (format == RecordFormat.MP3) {//mp3后期转换
             return 16;
         }
 
@@ -139,7 +142,7 @@ public class RecordConfig implements Serializable {
     }
 
     public int getEncodingConfig() {
-        if(format == RecordFormat.MP3){//mp3后期转换
+        if (format == RecordFormat.MP3) {//mp3后期转换
             return AudioFormat.ENCODING_PCM_16BIT;
         }
         return encodingConfig;
@@ -159,10 +162,10 @@ public class RecordConfig implements Serializable {
         return this;
     }
 
-
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "录制格式： %s,采样率：%sHz,位宽：%s bit,声道数：%s", format, sampleRate, getEncoding(), getChannelCount());
+        return String.format(Locale.getDefault(), "录制格式： %s,采样率：%sHz,位宽：%s bit,声道数：%s", format,
+            sampleRate, getEncoding(), getChannelCount());
     }
 
     public enum RecordFormat {

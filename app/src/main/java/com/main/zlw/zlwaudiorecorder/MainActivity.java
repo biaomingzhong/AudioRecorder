@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
         recordManager.setRecordSoundSizeListener(new RecordSoundSizeListener() {
             @Override
-            public void onSoundSize(int soundSize) {
+            public void onSoundSize(double soundSize) {
                 tvSoundSize.setText(String.format(Locale.getDefault(), "声音大小：%s db", soundSize));
             }
         });
