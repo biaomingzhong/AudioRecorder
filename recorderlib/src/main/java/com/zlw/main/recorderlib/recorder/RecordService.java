@@ -206,7 +206,13 @@ public class RecordService extends Service {
             Logger.w(TAG, "文件夹创建失败：%s", fileDir);
             return null;
         }
-        String fileName = String.format(Locale.getDefault(), "record_%s", FileUtils.getNowString(new SimpleDateFormat(currentConfig.getFileNameFormat(), Locale.SIMPLIFIED_CHINESE)));
+        String fileName = String.format(
+            Locale.getDefault(),
+            currentConfig.getFileNameFormat(),
+            FileUtils.getNowString(
+                new SimpleDateFormat(currentConfig.getFileNameDateFormat(), Locale.SIMPLIFIED_CHINESE)
+            )
+        );
         return String.format(Locale.getDefault(), "%s%s%s", fileDir, fileName, currentConfig.getFormat().getExtension());
     }
 
