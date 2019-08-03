@@ -39,6 +39,8 @@ public class RecordConfig implements Serializable {
         "%s/Record/",
         Environment.getExternalStorageDirectory().getAbsolutePath());
 
+    private String fileNameFormat = "yyyyMMdd_HH_mm_ss";
+
     public RecordConfig() {
     }
 
@@ -122,6 +124,14 @@ public class RecordConfig implements Serializable {
     }
 
     //get&set
+
+    public String getFileNameFormat() {
+        return fileNameFormat;
+    }
+
+    public void setFileNameFormat(String fileNameFormat) {
+        this.fileNameFormat = fileNameFormat;
+    }
 
     public RecordFormat getFormat() {
         return format;
