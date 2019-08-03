@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import fftlib.FftFactory;
+import com.zlw.main.recorderlib.fftlib.FftFactory;
 
 /**
  * @author zhaolewei on 2018/7/10.

@@ -1,6 +1,4 @@
-package fftlib;
-
-import com.zlw.main.recorderlib.utils.Logger;
+package com.zlw.main.recorderlib.fftlib;
 
 /**
  * FFT 数据处理工厂
@@ -16,7 +14,6 @@ public class FftFactory {
     public byte[] makeFftData(byte[] pcmData) {
 //        Logger.d(TAG, "pcmData length: %s", pcmData.length);
         if (pcmData.length < 1024) {
-            Logger.d(TAG, "makeFftData");
             return null;
         }
 
